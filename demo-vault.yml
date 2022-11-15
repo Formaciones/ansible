@@ -1,0 +1,17 @@
+- name:     Playbook para demostración de uso de Ansible Vault
+  hosts:    all
+
+  vars:
+    - var1: 'Contenido para cifrar'
+
+  tasks:
+    - name: Módulo Ping
+      ping: ''
+
+    - name: Módulo Debug
+      debug:
+        msg: 'Hola Mundo !!!'
+
+    - name: Módulo Debug 2
+      debug:
+        var: var1

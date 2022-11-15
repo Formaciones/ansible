@@ -1,0 +1,59 @@
+---
+- name:         Instalar librerías de Python - Modulo module-ansible.general.pip
+  hosts:        all
+  remote_user:  Administrador
+  become:       True
+
+  tasks:
+    - name: Instalar "nginx" package
+      apt:
+        name: nginx
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+    - name: Instalar la versión '1.0.15' of package "nginx"
+      apt:
+        name: nginx=1.0.15
+        allow_downgrade: yes
+        state: build-dep
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"  
+
+    - name: Actualizar la cache de los repositorios e instalar "nginx" package
+      apt:
+        name: nginx
+        state: latest
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+    - name: Eliminar "nginx" package
+      apt:
+        name: nginx
+        state: absent
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+    - name: Instalar una lista de paquetes
+      apt:
+        pkg:
+        - nginx
+        - nginx-extras
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+    - name: Desinstalar una lista de paquetes
+      apt:
+        pkg:
+        - nginx
+        - nginx-extras
+        state: absent
+        purge: yes
+        autoremove: yes
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"      
+
+    - name: Actualizar todos los paquetes a las últimas versiones
+      apt:
+        name: "*"
+        state: latest
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+    - name: Actualizar el OS (apt-get dist-upgrade)
+      apt:
+        upgrade: dist    
+...

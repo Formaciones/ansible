@@ -1,0 +1,10 @@
+- name: Playbook para demos con Ansible Tower
+  hosts: all
+  tasks:
+    - name: Módulos ping - Etiqueta -> testing
+      ping: ''
+      tags: testing
+
+    - name: Módulo command - Etiqueta -> shell
+      command: ifconfig
+      tags: shell

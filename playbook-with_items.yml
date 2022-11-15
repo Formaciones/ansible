@@ -1,0 +1,27 @@
+---
+- name:         Probando bucles en tareas
+  hosts:        all
+  remote_user:  Administrador
+
+  vars:
+    pakages:
+      - apache2
+      - php
+      - curl
+
+  tasks:
+    - name: Instalar paquetes en Ubuntu
+      apt:
+        name: '{{item}}'
+        state: latest
+      become: True
+      with_items: '{{pakages}}'
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+    - name: Instalar paquetes en Centos
+      yum: 
+        name: '{{item}}'
+      become: True
+      with_items: '{{pakages}}'
+      when: ansible_distribution == "CentOS"
+...

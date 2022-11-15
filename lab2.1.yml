@@ -1,0 +1,61 @@
+
+# ansible-playbook lab2.1.yml --syntax-check
+# ansible-playbook lab2.1.yml 
+# ansible-playbook lab2.1.yml -e remote_path=/etc/ansible
+# ansible-playbook lab2.1.yml -e '{"remote_path":"/etc/ansible"}'
+---
+- name:   Ejemplo definición de variables
+  hosts:  all
+  vars:
+    - lista1: ["fresa", "manzana", "melón", "naranja"]
+    - lista2:
+        - fresa
+        - manzana
+        - melón
+        - naranja
+    - diccionario1: { rol: "web", db: "mariadb", framework: "php7"}
+    - diccionario2:
+        - rol: web
+        - db: mariadb
+        - framework: php7
+    - frutas:
+        - fruta: fresa
+          color: rojo
+        - fruta: manzana
+          color: amarillo
+        - fruta: naranja
+          color: naranja        
+    - una_linea: >
+        Comienzo del contenido de la linea,
+        continuación de la línea
+        y fin de la línea.
+    - varias_lineas: |
+        línea 1
+        línea 2
+        línea 3
+
+  tasks:
+    - name: Pintamos el contenido de las variables de texto definidas en el playbook
+      debug: 
+        var: una_linea
+    
+    - name: Pintamos el contenido de las variables de texto definidas en el playbook
+      debug:
+        var: varias_lineas
+
+    - name: Pintamos el contenido de la posición 2 de la lista
+      debug:
+        msg: 'Elemento posición 1: {{frutas[1]}} --> Fruta: {{frutas[1].fruta}} - Color: {{frutas[1].color}}'
+
+    - name: Pintamos el contenido de la posición 1 de la frutas
+      debug:
+        msg: 'Elemento posición 2: {{lista1[2]}}'        
+
+    - name: Pintamos el contenido de la clave Rol del diccionario
+      debug:
+        msg: 'Rol: {{diccionario1["rol"]}}'
+
+    - name: Pintamos el contenido de la variable remote_path creada utilizando el parámeteo -e o --extra-vars
+      debug:
+        msg: 'El path de destino es {{remote_path}}'
+...

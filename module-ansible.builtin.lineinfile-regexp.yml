@@ -1,0 +1,29 @@
+---
+- name:         Trabajando con Ficheros - Modulo module-ansible.builtin.linefile
+  hosts:        all
+  remote_user:  Administrador
+
+  tasks:
+    - name: Instalar paquetes en Ubuntu
+      apt:
+        name: apache2
+        state: latest
+      become: True
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+    - name: Remplaza el puerto 80 por el 8080
+      lineinfile:
+        path: /etc/apache2/sites-available/000-default.conf
+        backup: 'yes'
+        regexp: '^<VirtualHost *:[0-9]{1-5}>'
+        line: '<VirtualHost *:8080>'
+        state: present
+      become: True
+      register: apacheconfig
+    
+    - service: 
+        name: apache2 
+        state: reloaded
+      become: True
+      when: apacheconfig.changed 
+...

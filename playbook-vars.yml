@@ -1,0 +1,35 @@
+---
+- name:   Ejemplo definición de variables
+  hosts:  all
+  vars:
+    - lista1: ["fresa", "manzana", "melón", "naranja"]
+    - lista2:
+        - fresa
+        - manzana
+        - melón
+        - naranja
+    - diccionario: { rol: "web", db: "mariadb", framework: "php7"}
+    - diccionario2:
+        - rol: web
+        - db: mariadb
+        - framework: php7
+    - frutas:
+        - fruta: fresa
+          color: rojo
+        - fruta: manzana
+          color: amarillo
+        - fruta: naranja
+          color: naranja
+    - una_linea: >
+        Comienzo del contenido de la linea, 
+        continuación de la línea 
+        y fin de la línea.
+    - varias_lineas: |
+        línea 1
+        línea 2
+        línea 3
+
+  tasks:
+    - name: Tarea inicial, ejecutar el comando id
+      command: id
+...

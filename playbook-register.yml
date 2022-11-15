@@ -1,0 +1,27 @@
+---
+- name:         Probando creación de variables con register
+  hosts:        all
+  remote_user:  Administrador
+
+  tasks:
+    - name: Obtener la configuración de red en Linux
+      command: ifconfig
+      register: resultado
+      when: ansible_system == "Linux"
+
+    - name: Mostrar el contenido de la variable resultado
+      debug:
+        var: resultado
+
+    - name: Mostrar Changed
+      debug:
+        msg: 'Estado de Changed: {{resultado.changed}}'
+
+    - name: Mostrar Failed
+      debug:
+        msg: 'Estado de Failed: {{resultado.failed}}'      
+
+    - name: Mostrar stdOut
+      debug:
+        msg: 'Estado de stdOut: {{resultado.stdout}}'           
+...

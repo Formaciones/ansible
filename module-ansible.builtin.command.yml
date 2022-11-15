@@ -1,0 +1,21 @@
+---
+- name:         Trabajando con Commandos - Modulo module-ansible.builtin.command
+  hosts:        all
+  remote_user:  Administrador
+  become:       True
+
+  tasks:
+    - name: Ejecuta el comando si /path/to/database no existe (todo en una línea)
+      command: /usr/bin/make_database.sh db_user db_name creates=/path/to/database
+
+    - name: Ejecuta el comando si /path/to/database no existe (con el parámetro 'args')
+      command: /usr/bin/make_database.sh db_user db_name
+        args:
+          creates: /path/to/database
+
+    - name: Ejecuta el comando si /path/to/database no existe (con el parámetro 'cmd')
+      command:
+        cmd: /usr/bin/make_database.sh db_user db_name
+        creates: /path/to/database
+
+...

@@ -1,0 +1,15 @@
+# ==========================================================
+# Podemos ver toda la estructura de ficheros del rol apache2
+#
+#   cd /etc/ansible/roles/apache2
+#   find .
+# ==========================================================
+---
+- name:         Trabajando con Roles
+  hosts:        all
+  remote_user:  Administrador
+  become:       True
+
+  roles:
+    - apache2
+...

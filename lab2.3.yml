@@ -1,0 +1,14 @@
+---
+- name:         Copiar un fichero utilizando una plantilla, variables y hechos
+  hosts:        all
+  remote_user:  Administrador
+  become:       True
+  vars:
+    - remote_path:  /etc
+
+  tasks:
+    - name: Copiar fichero demo
+      template: 
+        src: /etc/ansible/plantillas/lab2.3.j2 
+        dest: '{{remote_path}}/file-demo.txt'
+...

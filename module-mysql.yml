@@ -1,0 +1,47 @@
+---
+- name: Instalación y administración de MySQL
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  roles:
+    - role: buluma.mysql
+      mysql_databases:
+        - name: my_db
+          encoding: utf8
+          collation: utf8_bin
+      mysql_users:
+        - name: admin
+          password: Pa$$w0rd
+          priv: "my_db.*:ALL"
+          update_password: on_create
+  tasks:
+    - name: Instalar conector de MySQL para Python
+      pip:
+        name: mysql-connector-python
+        state: latest
+    
+    - name: Crear una base de datos
+      mysql_db:
+        name: demodb
+        state: present
+
+    - name: Copia de seguridad de todas las base de datos
+      mysql_db:
+        name: all
+        state: dump
+        target: /home/{{ansible_hostname}}_db.sql
+...
+#############################################################
+# Requiere: ansible-galaxy install buluma.mysql
+#############################################################
+#
+# PIP
+#  - ansible>=2.10
+#  - jinja2>=2.11.2
+#  - jmespath
+#
+#############################################################
+# Error en /buluma.mysql/tasks/assert.yml
+# debes sustituir is integer por is number
+#############################################################

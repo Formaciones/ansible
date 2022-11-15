@@ -1,0 +1,10 @@
+---
+- name:         Probando condicionales en imports, includes, roles y tareas
+  hosts:        all
+  remote_user:  Administrador
+
+  tasks:
+    - name: Copiar fichero demo
+      debug:
+        var: ansible_system
+...

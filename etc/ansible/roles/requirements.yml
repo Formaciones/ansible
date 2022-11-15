@@ -1,0 +1,14 @@
+# Descargar desde Galaxy
+- src: yatesr.timezone
+
+# Descargar desde Galaxy
+- name: timepkg 
+  src: yatesr.timezone
+
+# Descargar desde Github
+- src: https://github.com/bennojoy/nginx
+
+# Descargar desde Github. Indica versión y el nombre para instalarlo
+- name: nginx_role
+  src: https://github.com/bennojoy/nginx
+  version: main

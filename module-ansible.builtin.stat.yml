@@ -1,0 +1,36 @@
+---
+- name:         Trabajando con Ficheros - Modulo module-ansible.builtin.stat
+  hosts:        all
+  remote_user:  Administrador
+  become:       True
+
+  tasks:
+    - name: Comprobar que un directorio existe
+      stat:
+        path: /tmp
+      register: info
+
+    - name: Ver el contenido de la variable info
+      debug:
+        var: info
+
+    - name: Es un directorio /tmp
+      debug:
+        msg: '/tmp es un directorio: {{info.stat.isdir}}'
+
+    - name: Copiar fichero demo
+      copy: 
+        content: 'Contenido del fichero Demo.'
+        backup: yes
+        dest: /tmp/file-demo.txt
+        when: info.stat.isdir == True
+   
+    - name: Comprobar que un fichero existe
+      stat:
+        path: /tmp/file-demo.txt
+      register: info
+
+    - name: Es un directorio /tmp/file-demo.txt
+      debug:
+        msg: '/tmp/file-demo.txt es un directorio: {{info.stat.isdir}}'
+...

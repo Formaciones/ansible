@@ -1,0 +1,21 @@
+---
+- name:   Muestra Facts
+  hosts:  localhost
+
+  tasks:
+    - name: Muestra el contenido de ansible_facts['nodename']
+      debug:
+        var: ansible_facts['nodename']
+
+    - name: Muestra el contenido de ansible_facts['nodename']
+      debug:
+        var: ansible_facts['hostname']     
+
+    - name: Muestra el contenido de ansible_facts['fqdn']
+      debug:
+        var: ansible_facts['fqdn']  
+
+    - name: Muestra la versión del intrepete de Python
+      debug:
+        msg: "La versión de Python es {{ ansible_facts['python']['version']['major'] }}.{{ ansible_facts['python']['version']['minor'] }}.{{ ansible_facts['python']['version']['micro'] }}-{{ ansible_facts['python']['version']['releaselevel'] }}"
+...

@@ -1,0 +1,14 @@
+---
+- name:         Probando condicionales en imports, includes, roles y tareas
+  hosts:        all
+  remote_user:  Administrador
+
+  tasks:
+    - name: Obtener la configuración de red en Linux
+      command: ifconfig
+      when: ansible_system == "Linux"
+    - name: Obtener la configuración de red en Windows
+      win_command: 
+        cmd: ipconfig
+      when: ansible_system == "Win32NT"
+...

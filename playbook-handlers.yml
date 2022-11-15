@@ -1,0 +1,21 @@
+---
+- name:   Ejemplo trabajando con Handlers
+  hosts:  all
+  become: True
+  vars:
+    - file_src: /etc/ansible/demos/sshd_config
+
+  tasks:
+    - name: Copiar el fichero de configuración
+      copy:
+        src:  '{{file_src}}'
+        dest: /etc/ssh/sshd_config
+      notify: "Reiniciar el servidor sshd"
+
+  handlers:
+    - name: Reiniciar el servidor sshd
+      service:
+        name: sshd
+        state:  restarted
+      listen: "Reiniciar Servicios"
+...

@@ -1,0 +1,12 @@
+---
+- name:         Mi primer playbook, copiar un fichero del server a los host administrados
+  hosts:        all
+  remote_user:  Administrador
+  become:       True
+  vars:
+    - remote_path:  /etc
+
+  tasks:
+    - name: Copiar fichero demo
+      copy: src=/etc/ansible/demos/file-demo.txt dest={{remote_path}}/file-demo.txt
+...

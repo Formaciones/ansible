@@ -1,0 +1,29 @@
+---
+- name:         Añadir clave de los repositorios - Modulo module-ansible.general.apt_key
+  hosts:        all
+  remote_user:  Administrador
+  become:       True
+
+  tasks:
+    - name: Añadir claves del repositorio de microsoft
+      apt_key:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+    - name: Añadir el repositorio de microsoft
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main
+        state: present
+        filename: microsoft-edge
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+      
+    - name: Instalar microsoft edge
+      apt:
+        name: "microsoft-edge-stable"
+        state: latest
+        update_cache: true
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"            
+...
+
+# Repositorio de Claves: https://ftp-master.debian.org/keys.html

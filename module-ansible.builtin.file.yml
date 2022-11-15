@@ -1,0 +1,46 @@
+---
+- name:         Trabajando con Ficheros - Modulo module-ansible.builtin.file
+  hosts:        all
+  remote_user:  Administrador
+  become:       True
+
+  tasks:
+    - name: Comprobar que un directorio existe
+      file:
+        path: /tmp/
+        state: directory
+
+    - name: Comprobar que un directorio existe
+      file:
+        path: /var/log/journal
+        state: directory
+        owner: root
+        group: systemd-journal
+        mode: 2755
+      notify: Reiniciar Journal
+
+    - name: Copiar fichero demo
+      copy: 
+        content: 'Contenido del fichero Demo.'
+        backup: yes
+        dest: /tmp/file-demo.txt
+    
+    - name: Modificar propiedades del Ficheros
+      file:
+        path: /tmp/file-demo.txt
+        mode: '777'
+
+    - name: Eliminar el Ficheros
+      file:
+        path: /tmp/file-demo.txt
+        state: absent
+  
+  handlers:
+    - name: Reiniciar Journal
+      service:
+        name: systemd-journald
+        state: restarted
+...
+
+# Comprobamos los permisos mediante el comando:
+#  ls -ltr /tmp/file-demo*

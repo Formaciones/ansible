@@ -1,0 +1,11 @@
+- name:     Playbook para demostración de uso de Ansible Async
+  hosts:    all
+
+  tasks:
+    - name: Módulo Command
+      command: 'sleep 15'
+      async: 60
+      poll: 5
+
+    - name: Módulo Ping
+      ping: ''

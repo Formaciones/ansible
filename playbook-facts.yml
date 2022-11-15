@@ -1,0 +1,9 @@
+---
+- name:   Muestra Facts
+  hosts:  localhost
+
+  tasks:
+    - name: Muestra el contenido de todos los Hechos
+      debug:
+        var: ansible_facts
+...

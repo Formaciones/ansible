@@ -1,0 +1,25 @@
+---
+- name: Instalación del servidor web IIS y las herramientas de administración
+  hosts: all
+
+  tasks:
+    - name: Instalar el servidor web IIS y herramientas de administración
+      win_feature:
+        name:
+        - Web-Server
+        - Web-Common-Http
+        state: present
+        #include_sub_features: yes
+        include_management_tools: yes
+      register: win_feature
+
+    - name: Establezcer el modo de inicio del servicio en automático y asegúrese de que se inicie
+      win_service:
+        name: W3SVC
+        start_mode: auto
+        state: started
+
+    - name: Reiniciar si la instalación del servidor web lo requiere
+      win_reboot:
+      when: win_feature.reboot_required
+...

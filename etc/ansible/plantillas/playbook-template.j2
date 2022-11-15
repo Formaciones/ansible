@@ -1,0 +1,23 @@
+############################################################
+# Valores de Configuración del Servidor
+############################################################
+Hostname: {{server_config['hostname']}}
+Dirección IP: {{server_config['ip']}}
+
+
+############################################################
+# Listado de Frutas
+############################################################
+{% for item in lista_frutas %}
+- {{item}}
+{% endfor %}
+
+
+############################################################
+# Frutas de color rojo
+############################################################
+{% for item in frutas %}
+    {% if item.color == 'rojo' %}
+La {{item.fruta}} es de color rojo.
+    {% endif %}
+{% endfor %}

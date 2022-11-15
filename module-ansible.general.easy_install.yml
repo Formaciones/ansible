@@ -1,0 +1,25 @@
+---
+- name:         Instalar librerías de Python - Modulo module-ansible.general.easy_install
+  hosts:        all
+  remote_user:  Administrador
+  become:       True
+
+  tasks:
+    - name: Instalar paquetes para crar entornos virtuales en Python
+      apt:
+        name: virtualenv
+        state: latest
+      become: True
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+    - name: Instalar o actualizar pip
+      easy_install:
+        executable: /usr/lib/python3/dist-packages
+        name: pip
+        state: latest
+
+    - name: Instalar Bottle dentro de un entorno virtual
+      easy_install:
+        name: bottle
+        virtualenv: /webapps/myapp/venv
+...

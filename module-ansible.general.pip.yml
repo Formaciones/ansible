@@ -1,0 +1,67 @@
+---
+- name:         Instalar Paquetes del Sistema Operativo - Modulo module-ansible.general.apt
+  hosts:        all
+  remote_user:  Administrador
+  become:       True
+
+  tasks:
+    - name: Instalar el administrador de paquetes PIP para Python
+      apt:
+        name: python3-pip
+        state: latest
+      become: True
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+
+    - name: Instalar el paqueta para trabajar con entornos virtuales en Python
+      apt:
+        name: python3-venv
+        state: latest
+      become: True
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"      
+
+    - name: Instalar String Color, última versión
+      pip:
+        name: color
+        state: latest
+
+    - name: Instalar Bottle versión 0.11.1
+      pip:
+        name: bottle
+        version: 0.11.1
+        state: present
+
+    - name: Instalar Django versión 3.2.16
+      pip:
+        name: django==3.2.16
+        state: present
+
+    - name: Instalar Request versión entre 2.15.1 y 2.17.0
+      pip:
+        name: request>2.15.1,<2.17.0      # No funciona
+        state: present
+
+    - name: Comprobar que un directorio existe
+      stat:
+        path: /home/my_app/
+      register: info
+
+    - name: Crear un directorio para un (virtualenv)
+      command: 'mkdir /home/my_app/'
+      when: info.stat.isdir is not defined
+
+    - name: Copiar fichero de requerimientos de Python
+      copy:
+        src: /etc/ansible/demos/requirements.txt
+        dest: /home/my_app/requirements.txt
+        force: yes
+
+    - name: Instalar requerimientos de Python en un (virtualenv)
+      pip:
+        requirements: /home/my_app/requirements.txt
+        virtualenv: /home/my_app/venv
+        virtualenv_command: virtualenv
+      become: True
+...
+
+# borrar sudo rm /home/my_app/ -r -f
+# con ls /home/my_app/venv/bin/ se pueden ver los paquetes instalados

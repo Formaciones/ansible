@@ -1,0 +1,16 @@
+---
+- name:         Trabajando con Scripts - Modulo module-ansible.builtin.script
+  hosts:        all
+  remote_user:  Administrador
+  become:       True
+
+  tasks:
+    - name: Run a script with arguments (using 'cmd' parameter)
+      ansible.builtin.script:
+        cmd: /some/local/script.sh --some-argument 1234
+
+    - name: Run a script using an executable in a system path
+      ansible.builtin.script: /some/local/script.py
+      args:
+        executable: python3
+...

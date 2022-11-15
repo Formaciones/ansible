@@ -1,0 +1,13 @@
+---
+- name:         Playbook de ejemeplo para comprobar el funcionamiento de imports e includes
+  hosts:        all
+  remote_user:  Administrador
+  become:       True
+
+  tasks:
+    - name: Instalar vim
+      apt: 
+        name: vim
+        state: latest
+    - include_tasks: list-tasks.yml
+...

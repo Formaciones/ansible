@@ -1,0 +1,25 @@
+---
+- name:   Ejemplo trabajando con plantillas
+  hosts:  all
+  become: True
+  vars:
+    - lista_frutas:
+        - fresa
+        - manzana
+        - melón
+        - naranja
+    - server_config: { hostname: 'host-01', ip: '192.168.10.10' }
+    - frutas:
+        - fruta: fresa
+          color: rojo
+        - fruta: manzana
+          color: amarillo
+        - fruta: naranja
+          color: naranja
+
+  tasks:
+    - name: Aplicar una plantilla
+      template:
+        src: /etc/ansible/plantillas/playbook-template.j2 
+        dest: /home/resultado.txt
+...

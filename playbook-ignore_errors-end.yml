@@ -1,0 +1,23 @@
+---
+- name:         Probando creación el uso de ignore_errors
+  hosts:        all
+  remote_user:  Administrador
+
+  tasks:
+    - name: Obtener la configuración de red en Linux
+      command: cat /etc/filedemo.cfg
+      register: resultado
+      ignore_errors: True
+
+    - name: Mostrar el mensaje de salida
+      debug:
+        msg: 'Mensaje: {{resultado.stdout_lines}}' 
+
+    - name: Mostrar Changed
+      debug:
+        msg: 'Estado de Changed: {{resultado.changed}}'   
+
+    - name: Mostrar el mensaje de error
+      debug:
+        msg: 'Mensaje: {{resultado.stderr}}'      
+...

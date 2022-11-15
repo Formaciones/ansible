@@ -1,0 +1,23 @@
+- name:     Playbook para demostración de uso de Ansible Async
+  hosts:    all
+
+  tasks:
+    - name: Módulo Command
+      command: 'sleep 15'
+      async: 60
+      poll: 0
+      register: estado_async
+
+    - name: Módulo Ping
+      ping: ''
+
+    - name: Módulo Debug
+      debug:
+        msg: 'Otra tarea'
+
+    - name: Consultar el estado
+      async_status:
+        jid: '{{ estado_async.ansible_job_id }}'
+      register: estado
+      until: estado.finished
+      retries: 30
